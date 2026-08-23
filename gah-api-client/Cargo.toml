@@ -1,0 +1,21 @@
+[package]
+name = "gah-api-client"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-only"
+
+[dependencies]
+base64 = "0.22"
+futures = { workspace = true }
+progenitor-client = "0.14"
+rand = "0.8"
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[build-dependencies]
+gah-api = { path = "../gah-api", default-features = false }
+prettyplease = "0.2"
+progenitor = { workspace = true }
+serde_json = { workspace = true }
+syn = "2"

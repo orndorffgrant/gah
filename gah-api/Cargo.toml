@@ -1,0 +1,43 @@
+[package]
+name = "gah-api"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-only"
+
+[dependencies]
+gah-core = { path = "../gah-core" }
+dropshot = { workspace = true }
+schemars = "0.8"
+semver = "1"
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+gah-agent = { path = "../gah-agent", optional = true }
+sqlx = { workspace = true, optional = true }
+tokio-tungstenite = { version = "0.29", optional = true }
+futures = { workspace = true, optional = true }
+http = { version = "1", optional = true }
+sha2 = { workspace = true, optional = true }
+uuid = { workspace = true, optional = true }
+chrono = { workspace = true, optional = true }
+tracing = { workspace = true, optional = true }
+
+[features]
+default = ["run"]
+run = [
+    "gah-agent",
+    "sqlx",
+    "tokio-tungstenite",
+    "futures",
+    "http",
+    "sha2",
+    "uuid",
+    "chrono",
+    "tracing",
+]
+
+[dev-dependencies]
+reqwest = { workspace = true }
+futures = { workspace = true }
+tokio = { workspace = true }
+tokio-tungstenite = "0.29"

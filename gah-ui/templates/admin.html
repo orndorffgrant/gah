@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Admin</h1>
+<div class="card" style="max-width:500px">
+    <h2>Create User</h2>
+    {% match error %}{% when Some with (e) %}<div class="error">{{ e }}</div>{% when None %}{% endmatch %}
+    <form method="post" action="/admin/users">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" required>
+        <label for="password">Password (min 8 chars)</label>
+        <input type="password" name="password" id="password" minlength="8" required>
+        <label for="role">Role</label>
+        <select name="role" id="role">
+            <option value="creator">Creator</option>
+            <option value="admin">Admin</option>
+        </select>
+        <button type="submit">Create User</button>
+    </form>
+</div>
+<div class="card">
+    <h2>Users</h2>
+    <table>
+        <thead>
+            <tr><th>Username</th><th>Role</th><th>Created</th><th></th></tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>{{ u.username }}</td>
+                <td>{{ u.role }}</td>
+                <td>{{ u.created_at }}</td>
+                <td>
+                    <form method="post" action="/admin/users/{{ u.id }}/delete"
+                          onsubmit="return confirm('Delete user {{ u.username }}?')">
+                        <button class="danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

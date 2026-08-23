@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>{{ html_title }}</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="chat-body" data-session-path="/sessions/{{ session_id }}">
+    <div class="chat-app">
+        <header class="chat-header">
+            <a href="/sessions" class="chat-back" aria-label="Back to sessions">&#8249;</a>
+            <div class="chat-title">
+                <span class="chat-status" id="status" data-state="idle"></span>
+                <span class="chat-title-text">{{ html_title }}</span>
+            </div>
+        </header>
+        <main class="chat-scroll" id="messages">
+            {% match error %}{% when Some with (e) %}<div class="chat-error">{{ e }}</div>{% when None %}{% endmatch %}
+            {% if messages.is_empty() %}
+            <div class="chat-empty" id="empty">Start a conversation&hellip;</div>
+            {% endif %}
+            {% for m in messages %}
+                <div class="msg {% if m.role == "user" %}msg-user{% else if m.role == "assistant" %}msg-assistant{% else %}msg-system{% endif %}">
+                    <span class="msg-role">{% if m.role == "user" %}You{% else if m.role == "assistant" %}Assistant{% else %}System{% endif %}</span>
+                    <div class="msg-content">{{ m.content }}</div>
+                </div>
+            {% endfor %}
+        </main>
+        <form class="composer" id="composer" autocomplete="off">
+            <textarea id="prompt" rows="1" placeholder="Message&hellip;"
+                      enterkeyhint="send" autocapitalize="off" autocorrect="off"
+                      spellcheck="false"></textarea>
+            <button type="submit" id="send" class="send-btn" aria-label="Send">&#8593;</button>
+        </form>
+    </div>
+    <script src="/assets/chat.js"></script>
+</body>
+</html>

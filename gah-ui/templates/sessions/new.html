@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>New Session</h1>
+<div class="card" style="max-width:500px">
+    {% match error %}{% when Some with (e) %}<div class="error">{{ e }}</div>{% when None %}{% endmatch %}
+    <form method="post">
+        <label for="provider">Provider</label>
+        <select name="provider" id="provider" required>
+            <option value="openai" {% if provider == "openai" %}selected{% endif %}>OpenAI</option>
+            <option value="anthropic" {% if provider == "anthropic" %}selected{% endif %}>Anthropic</option>
+            <option value="openrouter" {% if provider == "openrouter" %}selected{% endif %}>OpenRouter</option>
+            <option value="ollama" {% if provider == "ollama" %}selected{% endif %}>Ollama</option>
+            <option value="custom" {% if provider == "custom" %}selected{% endif %}>Custom (OpenAI-compatible)</option>
+        </select>
+        <label for="model">Model</label>
+        <input type="text" name="model" id="model" placeholder="gpt-4.1 / claude-sonnet-4-5 / ..." value="{{ model }}" required>
+        <label for="api_key">API Key (leave blank for OpenRouter to use $OPENROUTER_API_KEY)</label>
+        <input type="password" name="api_key" id="api_key" placeholder="sk-...">
+        <label for="api_base_url">Base URL (optional; required for Custom)</label>
+        <input type="text" name="api_base_url" id="api_base_url" placeholder="http://localhost:11434" value="{{ api_base_url }}">
+        <label for="system_prompt">System Prompt (optional)</label>
+        <textarea name="system_prompt" id="system_prompt" rows="3">{{ system_prompt }}</textarea>
+        <button type="submit">Create Session</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Sessions</h1>
+<div class="flex-row" style="margin-bottom:1rem">
+    <a href="/sessions/new" class="btn">New Session</a>
+</div>
+{% match error %}{% when Some with (e) %}<div class="error">{{ e }}</div>{% when None %}{% endmatch %}
+<div class="card">
+    {% if sessions.is_empty() %}
+    <p class="muted">No sessions yet. Create one to get started.</p>
+    {% else %}
+    <table>
+        <thead>
+            <tr><th>Provider / Model</th><th>Messages</th><th>Updated</th><th></th></tr>
+        </thead>
+        <tbody>
+            {% for s in sessions %}
+            <tr>
+                <td><a href="/sessions/{{ s.id }}">{{ s.config.provider }} / {{ s.config.model }}</a></td>
+                <td>{{ s.message_count }}</td>
+                <td>{{ s.updated_at }}</td>
+                <td>
+                    <button class="danger"
+                            hx-post="/sessions/{{ s.id }}/delete"
+                            hx-confirm="Delete this session?"
+                            hx-target="closest tr"
+                            hx-swap="delete">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

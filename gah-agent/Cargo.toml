@@ -1,0 +1,15 @@
+[package]
+name = "gah-agent"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-only"
+
+[dependencies]
+gah-core = { path = "../gah-core" }
+rig = { workspace = true }
+serde = { workspace = true }
+futures = "0.3"
+tokio = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }

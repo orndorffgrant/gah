@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ html_title }}</title>
+    <script src="/assets/htmx.js"></script>
+    <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="/" class="brand">GAH</a>
+        {% match username %}{% when Some with (u) %}
+        <a href="/sessions">Sessions</a>
+        <a href="/settings">Settings</a>
+        {% if role.as_deref() == Some("admin") %}<a href="/admin">Admin</a>{% endif %}
+        <span class="nav-user">{{ u }}</span>
+        <form action="/logout" method="post" class="inline">
+            <button class="secondary nav-logout">Logout</button>
+        </form>
+        {% when None %}{% endmatch %}
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

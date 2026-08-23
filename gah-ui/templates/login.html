@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card" style="max-width:400px;margin:4rem auto;">
+    <h1>Login</h1>
+    {% match error %}{% when Some with (e) %}<div class="error">{{ e }}</div>{% when None %}{% endmatch %}
+    <form method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" required autofocus>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <button type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}
