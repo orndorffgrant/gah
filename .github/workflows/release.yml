@@ -22,6 +22,12 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
 
+      - name: set version from tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          find . -name Cargo.toml -exec sed -i "s/^version = \".*\"/version = \"$VERSION\"/" {} +
+
       - name: install cross-compilation deps (arm64)
         if: matrix.target == 'aarch64-unknown-linux-gnu'
         run: |

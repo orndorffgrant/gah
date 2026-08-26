@@ -80,6 +80,8 @@ pub enum Command {
     },
     /// Export OpenAPI spec
     Openapi,
+    /// Print version
+    Version,
 }
 
 #[tokio::main]
@@ -187,6 +189,9 @@ async fn main() -> anyhow::Result<()> {
         Command::Openapi => {
             let spec: serde_json::Value = serde_json::from_str(&gah_api::openapi())?;
             println!("{}", serde_json::to_string_pretty(&spec)?);
+        }
+        Command::Version => {
+            println!("gah {}", env!("CARGO_PKG_VERSION"));
         }
     }
 

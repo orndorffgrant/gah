@@ -2739,7 +2739,7 @@ dependencies = [
 
 [[package]]
 name = "gah-agent"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "futures",
  "gah-core",
@@ -2753,7 +2753,7 @@ dependencies = [
 
 [[package]]
 name = "gah-api"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "chrono",
  "dropshot",
@@ -2776,7 +2776,7 @@ dependencies = [
 
 [[package]]
 name = "gah-api-client"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "base64 0.22.1",
  "futures",
@@ -2793,7 +2793,7 @@ dependencies = [
 
 [[package]]
 name = "gah-cli"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "anyhow",
  "clap",
@@ -2808,7 +2808,7 @@ dependencies = [
 
 [[package]]
 name = "gah-core"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "chrono",
  "schemars 0.8.22",
@@ -2819,7 +2819,7 @@ dependencies = [
 
 [[package]]
 name = "gah-ui"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "anyhow",
  "askama",
