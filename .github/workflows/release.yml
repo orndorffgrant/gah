@@ -5,9 +5,6 @@ on:
     tags:
       - 'v*'
 
-permissions:
-  contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -43,10 +40,26 @@ jobs:
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
 
       - name: package
-        run: |
-          cd target/${{ matrix.target }}/release
-          tar -czf "$OLDPWD/gah-${{ github.ref_name }}-${{ matrix.target }}.tar.gz" gah
+        run: tar -czf gah-${{ github.ref_name }}-${{ matrix.target }}.tar.gz -C target/${{ matrix.target }}/release gah
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gah-${{ matrix.target }}
+          path: gah-${{ github.ref_name }}-${{ matrix.target }}.tar.gz
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: gah-*.tar.gz
+          files: artifacts/gah-*.tar.gz
