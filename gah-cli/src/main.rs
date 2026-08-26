@@ -2,6 +2,7 @@ use clap::{Args, Parser, Subcommand};
 use std::net::SocketAddr;
 
 mod systemd_service;
+mod update;
 
 #[derive(Parser)]
 #[command(name = "gah", about = "Grant's Agent Harness")]
@@ -82,6 +83,15 @@ pub enum Command {
     Openapi,
     /// Print version
     Version,
+    /// Check for a newer release and apply it
+    Update {
+        /// Only report whether an update is available; don't apply it
+        #[arg(long)]
+        check: bool,
+        /// GitHub repo to fetch releases from (owner/name)
+        #[arg(long)]
+        repo: Option<String>,
+    },
 }
 
 #[tokio::main]
@@ -192,6 +202,9 @@ async fn main() -> anyhow::Result<()> {
         }
         Command::Version => {
             println!("gah {}", env!("CARGO_PKG_VERSION"));
+        }
+        Command::Update { check, repo } => {
+            update::run(check, repo.as_deref()).await?;
         }
     }
 

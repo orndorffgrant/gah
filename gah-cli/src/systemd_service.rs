@@ -71,6 +71,26 @@ pub fn restart_service(unit: &str) -> Result<()> {
     systemctl(unit, "restart")
 }
 
+/// Returns true if the unit is currently active (running).
+pub fn is_service_active(unit: &str) -> Result<bool> {
+    let output = Command::new("systemctl")
+        .args(["is-active", "--quiet", unit])
+        .output()
+        .with_context(|| format!("failed to run systemctl is-active {unit}"))?;
+    Ok(output.status.success())
+}
+
+/// Restart gah-api and gah-webui if they are currently running.
+pub fn restart_active_services() -> Result<()> {
+    for unit in ["gah-api", "gah-webui"] {
+        if is_service_active(unit)? {
+            restart_service(unit)?;
+            println!("restarted {unit}");
+        }
+    }
+    Ok(())
+}
+
 fn systemctl(unit: &str, action: &str) -> Result<()> {
     let output = Command::new("systemctl")
         .args([action, unit])
