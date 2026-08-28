@@ -2743,6 +2743,7 @@ version = "0.0.0-dev"
 dependencies = [
  "futures",
  "gah-core",
+ "reqwest 0.13.4",
  "rig",
  "serde",
  "serde_json",

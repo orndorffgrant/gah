@@ -192,22 +192,53 @@ body.chat-body {
 }
 .msg-system .msg-content { color: #64748b; font-size: 0.8125rem; }
 
-/* streaming / tool lines inside assistant messages */
+/* streaming + tool cards inside assistant messages */
 .stream-text {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
-.tool-line {
-    margin-top: 0.3rem;
-    padding: 0.3rem 0.5rem;
+.tool-card {
+    margin: 0.5rem 0 0.35rem;
+    border: 1px solid #334155;
+    border-radius: 0.375rem;
+    background: #111c33;
+    overflow: hidden;
+}
+.tool-head {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.55rem;
     background: #1e293b;
-    border-radius: 0.25rem;
+    border-bottom: 1px solid #334155;
+}
+.tool-ico {
+    font-size: 0.7rem;
+    color: #38bdf8;
+    line-height: 1;
+}
+.tool-ico--ok { color: #34d399; }
+.tool-name {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    letter-spacing: 0.02em;
+}
+.tool-body {
+    margin: 0;
+    padding: 0.45rem 0.55rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.72rem;
+    line-height: 1.45;
     color: #94a3b8;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+    max-height: 220px;
+    overflow-y: auto;
 }
+.tool-card--ok { border-color: #14532d; }
+.tool-card--ok .tool-head { background: #0f2a1c; border-bottom-color: #14532d; }
 .usage {
     margin-top: 0.3rem;
     font-size: 0.6875rem;

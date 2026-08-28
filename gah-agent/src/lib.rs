@@ -39,7 +39,11 @@ pub fn build_agent(config: &AgentConfig) -> Result<Agent, AgentError> {
         Some(p) if !p.is_empty() => builder.preamble(p),
         _ => builder,
     };
-    Ok(builder.tool(tools::BashTool).build())
+    Ok(builder
+        .tool(tools::BashTool)
+        .tool(tools::WebSearchTool)
+        .tool(tools::WebFetchTool)
+        .build())
 }
 
 fn model_handle_for(config: &AgentConfig) -> Result<ModelHandle, AgentError> {

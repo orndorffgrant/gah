@@ -69,6 +69,21 @@
         scrollToBottom(true);
     }
 
+    function prettyJson(s) {
+        try { return JSON.stringify(JSON.parse(s), null, 2); } catch (_) { return s; }
+    }
+
+    function toolCard(icon, name, body, mod) {
+        const card = el('div', 'tool-card' + (mod ? ' tool-card--' + mod : ''));
+        const head = el('div', 'tool-head');
+        head.appendChild(el('span', 'tool-ico' + (mod ? ' tool-ico--' + mod : ''), icon));
+        head.appendChild(el('span', 'tool-name', name));
+        card.appendChild(head);
+        const pre = el('pre', 'tool-body', body.length > 800 ? body.slice(0, 800) + '\n\u2026' : body);
+        card.appendChild(pre);
+        return card;
+    }
+
     function setStreaming(on) {
         streaming = on;
         sendBtn.disabled = on;
@@ -117,15 +132,14 @@
                 }
                 case 'tool_call': {
                     if (state.dots && state.dots.parentNode) state.dots.remove();
-                    state.content.appendChild(el('div', 'tool-line',
-                        '\u2192 ' + frame.name + '(' + JSON.stringify(frame.arguments) + ')'));
+                    state.content.appendChild(toolCard('\u25b8', frame.name, prettyJson(frame.arguments)));
                     scrollToBottom();
                     break;
                 }
                 case 'tool_result': {
-                    const content = String(frame.content == null ? '' : frame.content);
-                    state.content.appendChild(el('div', 'tool-line',
-                        '\u2713 ' + (content.length > 200 ? content.slice(0, 200) + '\u2026' : content)));
+                    const raw = String(frame.content == null ? '' : frame.content);
+                    const body = prettyJson(raw);
+                    state.content.appendChild(toolCard('\u2713', 'result', body, 'ok'));
                     scrollToBottom();
                     break;
                 }
